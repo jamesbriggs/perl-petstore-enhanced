@@ -1,0 +1,17 @@
+# The Perl Petstore Enhanced pets.cgi auth code should handle authentication by itself,
+#  but here's some sample .htaccess statements in case explicit configuration is needed:
+
+# Require valid-user
+
+# RewriteEngine On
+# RewriteCond %{HTTP:Authorization} ^(.*)
+# RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# The Swagger2 router will hide anything not declared in api.spec, but
+#  FilesMatch is still a good idea in case of a very likely web server misconfiguration:
+
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|inc|bak|pm|spec|json|yaml|pl)$">
+Order Allow,Deny
+Deny from all
+</FilesMatch>
+

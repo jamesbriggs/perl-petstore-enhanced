@@ -1,0 +1,469 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>No Title</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rev="made" href="mailto:root@localhost" />
+</head>
+
+<body style="background-color: white">
+
+
+<!-- INDEX BEGIN -->
+<div name="index">
+<p><a name="__index__"></a></p>
+
+<ul>
+
+	<li><a href="#name">NAME</a></li>
+	<li><a href="#version">VERSION</a></li>
+	<li><a href="#description">DESCRIPTION</a></li>
+	<li><a href="#terms_of_service">TERMS OF SERVICE</a></li>
+	<li><a href="#baseurl">BASEURL</a></li>
+	<li><a href="#resources">RESOURCES</a></li>
+	<ul>
+
+		<li><a href="#createpets">createPets</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#201___created">201 - Created</a></li>
+				<li><a href="#409___conflict">409 - Conflict</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+		<li><a href="#docpets">docPets</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#200___ok">200 - OK</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+		<li><a href="#infopets">infoPets</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#200___ok">200 - OK</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+		<li><a href="#listpets">listPets</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#200___ok">200 - OK</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+		<li><a href="#menupets">menuPets</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#200___ok">200 - OK</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+		<li><a href="#pingpets">pingPets</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#200___ok">200 - OK</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+		<li><a href="#showpetbyid">showPetById</a></li>
+		<ul>
+
+			<li><a href="#resource_url">Resource URL</a></li>
+			<li><a href="#parameters">Parameters</a></li>
+			<li><a href="#responses">Responses</a></li>
+			<ul>
+
+				<li><a href="#200___ok">200 - OK</a></li>
+				<li><a href="#default">Default</a></li>
+			</ul>
+
+		</ul>
+
+	</ul>
+
+	<li><a href="#copyright_and_license">COPYRIGHT AND LICENSE</a></li>
+</ul>
+
+<hr name="index" />
+</div>
+<!-- INDEX END -->
+
+<p>
+</p>
+<h1><a name="name">NAME</a></h1>
+<p>Swagger Petstore</p>
+<p>
+</p>
+<hr />
+<h1><a name="version">VERSION</a></h1>
+<p>1.0</p>
+<p>
+</p>
+<hr />
+<h1><a name="description">DESCRIPTION</a></h1>
+<p>Swagger Petstore</p>
+<p>
+</p>
+<hr />
+<h1><a name="terms_of_service">TERMS OF SERVICE</a></h1>
+<p><a href="http://www.example.com/terms">http://www.example.com/terms</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="baseurl">BASEURL</a></h1>
+<p><a href="http://www.jebriggs.com/api/v1.0">http://www.jebriggs.com/api/v1.0</a></p>
+<p>
+</p>
+<hr />
+<h1><a name="resources">RESOURCES</a></h1>
+<p>
+</p>
+<h2><a name="createpets">createPets</a></h2>
+<p>Create a pet</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  PUT <a href="http://www.jebriggs.com/api/v1.0/pets">http://www.jebriggs.com/api/v1.0/pets</a></pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<pre>
+  .---------------------------------------------------.
+  | Name | In   | Type   | Required | Description     |
+  |---------------------------------------------------|
+  | name | body | schema | Yes      | Add pet by name |
+  '---------------------------------------------------'</pre>
+<pre>
+  name:</pre>
+<pre>
+  {
+    &quot;name&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="201___created">201 - Created</a></h4>
+<p>Expected response to a valid request</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="409___conflict">409 - Conflict</a></h4>
+<p>Null response</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h2><a name="docpets">docPets</a></h2>
+<p>API Documentation</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  GET <a href="http://www.jebriggs.com/api/v1.0/doc">http://www.jebriggs.com/api/v1.0/doc</a></pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<p>This resource takes no parameters.</p>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="200___ok">200 - OK</a></h4>
+<p>Expected response to a valid request</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h2><a name="infopets">infoPets</a></h2>
+<p>API Info</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  GET <a href="http://www.jebriggs.com/api/v1.0">http://www.jebriggs.com/api/v1.0</a></pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<p>This resource takes no parameters.</p>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="200___ok">200 - OK</a></h4>
+<p>Expected response to a valid request</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h2><a name="listpets">listPets</a></h2>
+<p>List all pets</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  GET <a href="http://www.jebriggs.com/api/v1.0/pets">http://www.jebriggs.com/api/v1.0/pets</a></pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<pre>
+  .--------------------------------------------------------------------------------------.
+  | Name   | In    | Type    | Required | Description                                    |
+  |--------------------------------------------------------------------------------------|
+  | limit  | query | integer | No       | How many items to return at one time (max 100) |
+  | offset | query | integer | No       | How many items to skip from beginning (min 0)  |
+  '--------------------------------------------------------------------------------------'</pre>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="200___ok">200 - OK</a></h4>
+<p>An paged array of pets</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h2><a name="menupets">menuPets</a></h2>
+<p>Admin Menu</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  GET <a href="http://www.jebriggs.com/api/v1.0/admin/menu">http://www.jebriggs.com/api/v1.0/admin/menu</a></pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<p>This resource takes no parameters.</p>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="200___ok">200 - OK</a></h4>
+<p>Expected response to a valid request</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h2><a name="pingpets">pingPets</a></h2>
+<p>Health Check</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  GET <a href="http://www.jebriggs.com/api/v1.0/admin/ping">http://www.jebriggs.com/api/v1.0/admin/ping</a></pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<p>This resource takes no parameters.</p>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="200___ok">200 - OK</a></h4>
+<p>Expected response to a valid request</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<h2><a name="showpetbyid">showPetById</a></h2>
+<p>Info for a specific pet</p>
+<p>
+</p>
+<h3><a name="resource_url">Resource URL</a></h3>
+<pre>
+  GET <a href="http://www.jebriggs.com/api/v1.0/pets/">http://www.jebriggs.com/api/v1.0/pets/</a>{petId}</pre>
+<p>
+</p>
+<h3><a name="parameters">Parameters</a></h3>
+<pre>
+  .------------------------------------------------------------------.
+  | Name  | In   | Type   | Required | Description                   |
+  |------------------------------------------------------------------|
+  | petId | path | string | Yes      | The id of the pet to retrieve |
+  '------------------------------------------------------------------'</pre>
+<p>
+</p>
+<h3><a name="responses">Responses</a></h3>
+<p>
+</p>
+<h4><a name="200___ok">200 - OK</a></h4>
+<p>Expected response to a valid request</p>
+<pre>
+  [
+    {
+      &quot;id&quot;: int64, // required
+      &quot;name&quot;: string, // required
+      &quot;tag&quot;: string, // No description.
+    },
+    ...
+  ]</pre>
+<p>
+</p>
+<h4><a name="default">Default</a></h4>
+<p>unexpected error</p>
+<pre>
+  {
+    &quot;code&quot;: int32, // required
+    &quot;message&quot;: string, // required
+  },</pre>
+<p>
+</p>
+<hr />
+<h1><a name="copyright_and_license">COPYRIGHT AND LICENSE</a></h1>
+<p>API Support - <a href="mailto:support@example.com">support@example.com</a></p>
+<p>Artistic License version 2.0 - <a href="http://dev.perl.org/licenses/artistic.html">http://dev.perl.org/licenses/artistic.html</a></p>
+
+</body>
+
+</html>
