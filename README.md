@@ -61,9 +61,9 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
 **Operations Features**
 
-- built-in process health-check: /admin/ping => pong
+- built-in process health-check endpoint: /admin/ping => pong
 - my_throttle skeleton function
-- mod_perl compatible - just add your functions to Pets.pm
+- mod_perl compatible - just add your functions to Pet.pm
 - minimal dependencies - likely works with your existing version of Perl.
 
 **Getting Started**
