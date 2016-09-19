@@ -64,15 +64,17 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
 ```
 
+su -
+
 cpan Mojolicious Mojolicious::Plugin::MethodOverride Swagger2 XML::Simple Test::Mojo JSON
 
 git clone git@github.com:jamesbriggs/perl-petstore-enhanced.git
 
-cd pets
+chown -R root:root perl-petstore-enhanced/pets
+
+cd perl-petstore-enhanced/pets
 
 vi api.spec # configure 'host', 'basePath' and 'contact' properties near top of file
-
-pwd
 
 vi cgi-bin/pets.cgi set.sh # configure the install path, username, password, domain, schema  and base_url
 
@@ -82,19 +84,20 @@ prove
 
 ```
 
-- if pets/ is located under your httpd Documentroot, then configuration can be as simple as this:
-`Alias /api ~user/public_html/pets/cgi-bin/pets.cgi/api`
+- decide where you want to install the pets/ folder for your web server
+- configuration can be as simple as this:
+`Alias /api /home/<myuser>/public_html/pets/cgi-bin/pets.cgi/api`
 - verify Authorization header is being passed along by httpd if you want auth:
 HTTP_AUTHORIZATION='Basic XXXXXXXXXXX'
-For more, see: http://stackoverflow.com/questions/26475885/authorization-header-missing-in-php-post-request
+For more info, see: http://stackoverflow.com/questions/26475885/authorization-header-missing-in-php-post-request
 - Point your browser at http://www.example.com/api/v1.0/
-- download Postman
 
 **Getting Finished**
 
 - now you can finish writing your own API with customized module and endpoint names
 - change "Pets" to your module name, then "Pet" to your module name
 - run the `prove` test command
+- download Postman to easier do REST API development
 
 **Convert Spec**
 
