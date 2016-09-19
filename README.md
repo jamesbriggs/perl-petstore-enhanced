@@ -1,11 +1,11 @@
-Perl Petstore Enhanced
-======================
+Perl Petstore Enhanced REST API Framework
+=========================================
 
 **Summary**
 
 This is a much enhanced, yet still minimal, version of the Swagger Petstore sample code using Perl Mojolicious/Swagger2.
 
-Using this sample code and installation guide, an experienced programmer should be able to write a feature-rich REST API server in about an hour.
+Using this sample code and installation guide as a framework, an experienced programmer can write a feature-rich REST API server in about an hour.
 
 **Overview**
 
@@ -67,7 +67,7 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
 git clone git@github.com:jamesbriggs/perl-petstore-enhanced.git
 
-su -
+su
 
 cpan Mojolicious Mojolicious::Plugin::MethodOverride Swagger2 XML::Simple Test::Mojo JSON
 
