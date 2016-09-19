@@ -66,7 +66,7 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
 cpan Mojolicious Mojolicious::Plugin::MethodOverride Swagger2 XML::Simple Test::Mojo JSON
 
-git clone git@github.com:jamesbriggs/petstore++.git
+git clone git@github.com:jamesbriggs/perl-petstore-enhanced.git
 
 cd pets
 
@@ -96,7 +96,7 @@ For more, see: http://stackoverflow.com/questions/26475885/authorization-header-
 - change "Pets" to your module name, then "Pet" to your module name
 - run the `prove` test command
 
-***Convert spec***
+**Convert Spec**
 
 - Paste api.spec into http://editor.swagger.io/#/ to convert swagger spec from YAML to JSON (and back)
 
