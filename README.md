@@ -64,11 +64,11 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
 ```
 
+git clone git@github.com:jamesbriggs/perl-petstore-enhanced.git
+
 su -
 
 cpan Mojolicious Mojolicious::Plugin::MethodOverride Swagger2 XML::Simple Test::Mojo JSON
-
-git clone git@github.com:jamesbriggs/perl-petstore-enhanced.git
 
 chown -R root:root perl-petstore-enhanced/pets
 
