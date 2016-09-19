@@ -50,6 +50,7 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 **Developer Features**
 
 - sets common options like mode=production, secrets and title
+- has /admin route with separate admin username and password
 - has complete set of typical development directories, including public/, samples/, t/, and templates/
 - shows how to correctly version the API in the format v1.0
 - stores sample pet data in an array to avoid database dependencies.
