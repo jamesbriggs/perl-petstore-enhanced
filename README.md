@@ -13,11 +13,11 @@ Anybody can hand-roll a REST API server, but the tricky part is generating and m
 
 Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically generates the following:
 
-- input and output validation
+- input and output parameter validation
 - controller (aka dispatcher or router) to map URLs to function calls
-- display of HTML documentation for end-users
+- displays API documentation in HTML for end-users
 - automatic content negotiation for JSON, XML and text.
-- display of routes for debugging:
+- displays routes for debugging:
 
 ```
 
@@ -40,12 +40,12 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
 **API Consumer Features**
 
-- GET / shows HTML route summary (instead of only being available on error pages)
-- GET /doc shows API spec in HTML format
+- GET /api/v1.0 shows HTML route summary (instead of only being available on error pages)
+- GET /api/v1.0/doc shows API spec in HTML format
 - paging with offset and limit in /pets
-- Content negotiation with ?format=json and ?format=xml to automatically select output format for non-documentation routes
-- method override for clients to use POST with X-HTTP-Method-Override: {PATCH, PUT, DELETE}
-- Param and Basic Authentication. Default is username=Perl, password=Bender.     
+- content negotiation with ?format=json and ?format=xml to automatically select output format for non-documentation routes
+- HTTP method override for client programs to use POST with X-HTTP-Method-Override: {PATCH, PUT, DELETE} where necessary
+- Param and Basic Authentication for both API and browser clients. Default is username=Perl, password=Bender.     
 
 **Developer Features**
 
@@ -53,18 +53,19 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 - /admin route with separate admin username and password
 - has complete set of typical development directories, including public/, samples/, t/, and templates/
 - shows how to correctly version the API in the format v1.0
-- stores sample pet data in an array to avoid database dependencies.
-- command line examples of various Mojo and Swagger2 features in make.sh
-- up-to-date api.spec swagger properties in JSON and YAML
+- stores sample pet data in an array to avoid database dependencies
+- command line examples of various Mojo and Swagger2 test and validation features in make.sh
+- up-to-date Swagger2 api.spec properties in JSON and YAML formats
 - shows how to override automatic rendering by the Swagger2 controller using render()
 - good test coverage.
 
 **Operations Features**
 
-- built-in process health-check endpoint: /admin/ping => pong
+- built-in process health-check monitoring endpoint: /admin/ping => pong
 - my_throttle skeleton function
 - mod_perl compatible - just add your functions to Pet.pm
-- minimal dependencies - likely works with your existing version of Perl.
+- minimal dependencies - likely works with your existing version of Perl
+- adequate authentication for Intranet use already built-in.
 
 **Getting Started**
 
