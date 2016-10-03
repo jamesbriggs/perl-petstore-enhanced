@@ -55,7 +55,7 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
-   print 'Decoding JSON has failed ...', e
+   print 'error: decoding JSON failed ...', e
 
 try:
    print "Create a request to add a pet:\n";
@@ -66,7 +66,7 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
-   print 'Decoding JSON has failed ...', e
+   print 'error: decoding JSON failed ...', e
 
 try:
    print "Create a request to do a simple health check:\n";
@@ -75,7 +75,7 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
-   print 'Decoding JSON has failed ...', e
+   print 'error: decoding JSON failed ...', e
 
 try:
    print "Create a request to fetch list of pets:\n";
@@ -85,3 +85,5 @@ except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
    print 'error: decoding JSON failed ...', e
+
+exit(0)
