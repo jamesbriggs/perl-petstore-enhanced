@@ -6,9 +6,9 @@
 # Env: Python 2.6 or newer
 # Returns: exit status is non-zero on failure
 # Usage: ./python_client_sample.py
-# Note: For Centos6 python 2.6, do:
-#    yum install python-pip; pip install requests
-#    source ../set.sh
+# Note: For Centos6 python 2.6, do: yum install python-pip
+#   pip install requests
+#   source ../set.sh
 
 import json
 import os
@@ -27,14 +27,12 @@ admin_password = os.environ['PETS_ADMIN_PASSWORD']
 
 url = scheme + domain + base_url
 
-data      = {"name" : "zebra"}
-data_json = json.dumps(data)
 headers   = {'Content-type': 'application/json'}
 
 def output(myResponse):
    #print (myResponse.status_code)
 
-   # For successful API call, response code will be 200 (OK)
+   # For successful API call, response code will be 200 (OK) or 201 (Created)
    if(myResponse.ok):
      # Loading the response data into a dict variable
      # json.loads takes in only binary or string variables so using content to fetch binary content
@@ -46,19 +44,44 @@ def output(myResponse):
          print key + " : ", jData[key]
      print "\n";
    else:
-      # If response code is not ok (200), print the resulting http error code with description
-      myResponse.raise_for_status()
-      pprint(vars(myResponse))
+     # If response code is not ok, print the resulting http error code with description
+     myResponse.raise_for_status()
+     pprint(vars(myResponse))
 
-print "Create a request to fetch a pet:\n";
-myResponse = requests.get(url + "/pets/1", auth=HTTPBasicAuth(user, password), headers=headers, timeout=timeout)
-output(myResponse)
+try:
+   print "Create a request to fetch a pet:\n";
+   myResponse = requests.get(url + "/pets/1", auth=HTTPBasicAuth(user, password), headers=headers, timeout=timeout)
+   output(myResponse)
+except requests.exceptions.RequestException as e:
+   print e
+except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+   print 'Decoding JSON has failed ...', e
 
-print "Create a request to add a pet:\n";
-myResponse = requests.put(url + "/pets", auth=HTTPBasicAuth(user, password), data=data_json, headers=headers, timeout=timeout)
-output(myResponse)
+try:
+   print "Create a request to add a pet:\n";
+   data      = {"name" : "zebra"}
+   data_json = json.dumps(data)
+   myResponse = requests.put(url + "/pets", auth=HTTPBasicAuth(user, password), data=data_json, headers=headers, timeout=timeout)
+   output(myResponse)
+except requests.exceptions.RequestException as e:
+   print e
+except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+   print 'Decoding JSON has failed ...', e
 
-print "Create a request to do a simple health check:\n";
-myResponse = requests.get(url+'/admin/ping', auth=HTTPBasicAuth(admin_user, admin_password), timeout=timeout)
-output(myResponse)
+try:
+   print "Create a request to do a simple health check:\n";
+   myResponse = requests.get(url+'/admin/ping', auth=HTTPBasicAuth(admin_user, admin_password), timeout=timeout)
+   output(myResponse)
+except requests.exceptions.RequestException as e:
+   print e
+except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+   print 'Decoding JSON has failed ...', e
 
+try:
+   print "Create a request to fetch list of pets:\n";
+   myResponse = requests.get(url + "/pets", auth=HTTPBasicAuth(user, password), headers=headers, timeout=timeout)
+   output(myResponse)
+except requests.exceptions.RequestException as e:
+   print e
+except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+   print 'error: decoding JSON failed ...', e

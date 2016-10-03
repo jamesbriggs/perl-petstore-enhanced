@@ -5,7 +5,8 @@
 # Purpose: ruby language sample client program for Perl Petstore Enhanced API Server
 # Copyright: James Briggs USA 2016
 # Env: Ruby 2
-# Returns:
+# Notes: sudo gem install httparty
+#  source ../set.sh
 
 require 'rubygems'
 require 'httparty'
@@ -20,7 +21,7 @@ class Pets
   include HTTParty
 # see http://www.rubydoc.info/github/jnunemaker/httparty/HTTParty/ClassMethods
   format :json
-  base_uri ENV['PETS_DOMAIN']+ENV['PETS_BASE_URL']
+  base_uri ENV['PETS_SCHEME']+ENV['PETS_DOMAIN']+ENV['PETS_BASE_URL']
   default_timeout ENV['PETS_TIMEOUT'].to_f
   headers 'Content-Type' => 'application/json'
 
@@ -45,18 +46,59 @@ class Pets
   end
 end
 
-puts "Get one pet:"
-url='/pets/1'
-puts Pets.new(user, pass).get(url).inspect, "\n"
+begin
+   puts "Get one pet:"
+   url='/pets/1'
+   response = Pets.new(user, pass).get(url)
+   if response.code == 200
+      puts response.body, "\n"
+   else
+      puts response.inspect, "\n"
+   end
+rescue => e
+  puts "Rescued: #{e.inspect}", "\n"
+end
 
-puts "Update one pet:"
-data = {
-   'name' => 'zebra'
-}
-url='/pets'
-puts Pets.new(user, pass).put(url, data).inspect, "\n"
+begin
+   puts "Update one pet:"
+   data = {
+      'name' => 'zebra'
+   }
+   url='/pets'
+   response = Pets.new(user, pass).put(url, data)
+   if response.code == 201
+      puts response.body, "\n"
+   else
+      puts response.inspect, "\n"
+   end
+rescue => e
+  puts "Rescued: #{e.inspect}", "\n"
+end
 
-#puts "Get list of pets:"
-#url='/pets'
-#puts Pets.new(user, pass).get(url).inspect, "\n"
+begin
+   puts "Get list of pets:"
+   url='/pets'
+   response = Pets.new(user, pass).get(url)
+   if response.code == 200
+      puts response.body, "\n"
+   else
+      puts response.inspect, "\n"
+   end
+rescue => e
+  puts "Rescued: #{e.inspect}", "\n"
+end
 
+begin
+   puts "Basic healthcheck:"
+   url='/admin/ping'
+   response = Pets.new(admin_user, admin_pass).get(url)
+   if response.code == 200
+      puts response.body, "\n"
+   else
+      puts response.inspect, "\n"
+   end
+rescue => e
+  puts "Rescued: #{e.inspect}", "\n"
+end
+
+exit 0
