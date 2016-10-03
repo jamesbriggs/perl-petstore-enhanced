@@ -54,7 +54,7 @@ try:
    output(myResponse)
 except requests.exceptions.RequestException as e:
    print e
-except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+except ValueError as e:
    print 'error: decoding JSON failed ...', e
 
 try:
@@ -65,7 +65,7 @@ try:
    output(myResponse)
 except requests.exceptions.RequestException as e:
    print e
-except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+except ValueError as e:
    print 'error: decoding JSON failed ...', e
 
 try:
@@ -74,7 +74,7 @@ try:
    output(myResponse)
 except requests.exceptions.RequestException as e:
    print e
-except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+except ValueError as e:
    print 'error: decoding JSON failed ...', e
 
 try:
@@ -83,7 +83,7 @@ try:
    output(myResponse)
 except requests.exceptions.RequestException as e:
    print e
-except ValueError as e:  # includes simplejson.decoder.JSONDecodeError
+except ValueError as e:
    print 'error: decoding JSON failed ...', e
 
 exit(0)
