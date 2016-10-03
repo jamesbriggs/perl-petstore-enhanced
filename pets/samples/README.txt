@@ -8,7 +8,7 @@ Steps:
 2. ./curl_client_sample.sh
 3. ./perl_client_sample.pl
 4. ./python_client_sample.py
-5. ./ruby_client_sample.py
+5. ./ruby_client_sample.rb
 6. ./wget_client_sample.sh 
 
 Take a look at the source code to see how to write your own programs.
