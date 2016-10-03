@@ -17,6 +17,9 @@ use MIME::Base64 qw(encode_base64);
    my $api_key      = $ENV{'PETS_USER'};
    my $api_password = $ENV{'PETS_PASSWORD'};
 
+   my $admin_api_key      = $ENV{'PETS_ADMIN_USER'};
+   my $admin_api_password = $ENV{'PETS_ADMIN_PASSWORD'};
+
 # Create a user agent object
    use LWP::UserAgent;
 
@@ -131,6 +134,9 @@ use MIME::Base64 qw(encode_base64);
       exit 5;
    }
 }
+
+# Add admin auth token to user agent
+   $ua->default_header('Authorization' => 'Basic ' . encode_base64("$admin_api_key:$admin_api_password", ''));
 
 {
 # Create a request to do a simple health check
