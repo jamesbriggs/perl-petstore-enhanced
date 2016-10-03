@@ -1,8 +1,9 @@
 #!/usr/bin/perl
 
-# Program: sample.pl
-# Usage: ./sample.pl
+# Program: perl_client_sample.pl
+# Usage: ./perl_client_sample.pl
 # Purpose: perl language sample client program for Perl Petstore Enhanced API Server
+# Copyright: James Briggs USA 2016
 # Env: Perl5
 # Returns: exit status is non-zero on failure
 
@@ -22,7 +23,7 @@ use MIME::Base64 qw(encode_base64);
    my $ua = LWP::UserAgent->new;
    $ua->agent("PetstorePerlBot/0.1");
    $ua->from('perlbot@example.com');
-   $ua->timeout(10);
+   $ua->timeout($ENV{'PETS_TIMEOUT'} || 10);
 
 # Add auth token to user agent
    $ua->default_header('Authorization' => 'Basic ' . encode_base64("$api_key:$api_password", ''));
@@ -132,7 +133,7 @@ use MIME::Base64 qw(encode_base64);
 }
 
 {
-# Create a request to add a pet with a POST override in the headers
+# Create a request to do a simple health check
    my $req = HTTP::Request->new(GET => $url . '/admin/ping');
 
 # Pass request to the user agent and get a response back

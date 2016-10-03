@@ -14,4 +14,5 @@ export PETS_ADMIN_PASSWORD=Bender
 export PETS_SCHEME="http://"
 export PETS_DOMAIN=www.example.com
 export PETS_BASE_URL="/api/v1.0"
+export PETS_TIMEOUT=10
 

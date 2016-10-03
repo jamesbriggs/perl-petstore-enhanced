@@ -1,5 +1,12 @@
 #!/usr/bin/perl
 
+# Program: pets.cgi
+# Usage: ./pets.cgi
+# Purpose: perl language program for Perl Petstore Enhanced API Server
+# Copyright: James Briggs USA 2016
+# Env: Perl5
+# Notes: see Readme.md
+
    my $path;
    BEGIN { $path = '/home/example.com/public_html/pets' }
 
