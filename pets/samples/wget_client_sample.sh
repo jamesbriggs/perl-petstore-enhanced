@@ -21,19 +21,48 @@ admin_password=$PETS_ADMIN_PASSWORD
 
 url="${scheme}${domain}${base_url}"
 
-wget_options="--quiet --timeout $timeout --http-user $user --http-password $password -O -"
+#options="-S --max-redirect=3 --quiet --timeout $timeout --header='Accept-Charset: UTF-8' --header='Content-Type: application/json' -O -"
+options="--max-redirect=3 --quiet --timeout $timeout -O -"
+auth_options="--auth-no-challenge --http-user $user --http-password $password"
+admin_auth_options="--auth-no-challenge --http-user $admin_user --http-password $admin_password"
 
 echo "Get list of pets:"
-wget $wget_options ${url}/pets
+wget $options $auth_options ${url}/pets
+ret=$?
+echo
+echo "ret=$ret"
 echo
 
 echo "Get one pet:"
-wget $wget_options ${url}/pets/1
+wget $options $auth_options ${url}/pets/1
+ret=$?
+echo
+echo "ret=$ret"
 echo
 
 # http://search.cpan.org/~ams/Mojolicious-4.26/lib/Mojolicious/Guides/Rendering.pod#Encoding
 echo "Get one pet gzip => gunzip:"
-wget $wget_options --header "Accept-Encoding: gzip" ${url}/pets/1 | zcat -q
+wget $options $auth_options --header "Accept-Encoding: gzip, deflate" ${url}/pets/1 | zcat -q
+ret=$PIPESTATUS
+echo
+echo "ret=$ret"
+echo
+
+echo "Add one pet:"
+# newer versions of wget support --method=PUT --body-data=''
+#wget $options $auth_options --method=PUT --body-data='{"name":"zebra"}' ${url}/pets
+wget $options $auth_options --header='X-HTTP-Method-Override: PUT' --post-data='{"name":"zebra"}' ${url}/pets
+ret=$?
+echo
+echo "ret=$ret"
+echo
+
+echo "Basic health check:"
+wget $options $admin_auth_options ${url}/admin/ping
+ret=$?
+echo
+echo "ret=$ret"
 echo
 
 exit 0
+

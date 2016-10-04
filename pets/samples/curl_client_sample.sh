@@ -36,4 +36,14 @@ echo "Get one pet gzip => gunzip:"
 curl $curl_options -H "Accept-Encoding: gzip" ${url}/pets/1 -w "\n" | zcat -q | cat
 echo
 
+echo "Add one pet using HERE document:"
+curl $curl_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary @- ${url}/pets <<EOF
+{"name": "zebra"}
+EOF
+echo
+
+echo "Add one pet inline:"
+curl $curl_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary '{"name": "zebra"}' ${url}/pets
+echo
+
 exit 0
