@@ -27,29 +27,35 @@ admin_auth_options="--basic -u $admin_user:$admin_password"
 
 echo "Get list of pets:"
 curl $options $auth_options ${url}/pets -w "\n"
-echo
+ret=$?
+echo -e "ret=$ret\n"
 
 echo "Get one pet:"
 curl $options $auth_options ${url}/pets/1 -w "\n"
-echo
+ret=$?
+echo -e "ret=$ret\n"
 
 # http://search.cpan.org/~ams/Mojolicious-4.26/lib/Mojolicious/Guides/Rendering.pod#Encoding
 echo "Get one pet gzip => gunzip:"
 curl $options $auth_options -H "Accept-Encoding: gzip, deflate" ${url}/pets/1 -w "\n" | zcat -q | cat
-echo
+ret=$?
+echo -e "ret=$ret\n"
 
 echo "Add one pet using HERE document:"
 curl $options $auth_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary @- ${url}/pets <<EOF
 {"name": "zebra"}
 EOF
-echo
+ret=$?
+echo -e "ret=$ret\n"
 
 echo "Add one pet inline:"
 curl $options $auth_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary '{"name": "zebra"}' ${url}/pets
-echo
+ret=$?
+echo -e "ret=$ret\n"
 
 echo "Basic health check:"
 curl $options $admin_auth_options -w "\n" ${url}/admin/ping
-echo
+ret=$?
+echo -e "ret=$ret\n"
 
 exit 0

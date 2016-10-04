@@ -9,7 +9,7 @@ Steps:
 3. ./perl_client_sample.pl
 4. ./python_client_sample.py
 5. ./ruby_client_sample.rb
-6. ./wget_client_sample.sh 
+6. ./wget_client_sample.sh (curl is more REST API-friendly, so use curl if possible)
 
 Take a look at the source code to see how to write your own programs.
 

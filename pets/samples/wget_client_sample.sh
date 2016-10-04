@@ -29,40 +29,30 @@ admin_auth_options="--auth-no-challenge --http-user $admin_user --http-password 
 echo "Get list of pets:"
 wget $options $auth_options ${url}/pets
 ret=$?
-echo
-echo "ret=$ret"
-echo
+echo -e "\nret=$ret\n"
 
 echo "Get one pet:"
 wget $options $auth_options ${url}/pets/1
 ret=$?
-echo
-echo "ret=$ret"
-echo
+echo -e "\nret=$ret\n"
 
 # http://search.cpan.org/~ams/Mojolicious-4.26/lib/Mojolicious/Guides/Rendering.pod#Encoding
 echo "Get one pet gzip => gunzip:"
 wget $options $auth_options --header "Accept-Encoding: gzip, deflate" ${url}/pets/1 | zcat -q
 ret=$PIPESTATUS
-echo
-echo "ret=$ret"
-echo
+echo -e "\nret=$ret\n"
 
 echo "Add one pet:"
 # newer versions of wget support --method=PUT --body-data=''
 #wget $options $auth_options --method=PUT --body-data='{"name":"zebra"}' ${url}/pets
 wget $options $auth_options --header='X-HTTP-Method-Override: PUT' --post-data='{"name":"zebra"}' ${url}/pets
 ret=$?
-echo
-echo "ret=$ret"
-echo
+echo -e "\nret=$ret\n"
 
 echo "Basic health check:"
 wget $options $admin_auth_options ${url}/admin/ping
 ret=$?
-echo
-echo "ret=$ret"
-echo
+echo -e "\nret=$ret\n"
 
 exit 0
 
