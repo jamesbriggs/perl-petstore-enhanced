@@ -29,22 +29,20 @@ url = scheme + domain + base_url
 
 headers   = {'Content-type': 'application/json'}
 
+msg_json_error = 'error: decoding JSON failed ...'
+
 def output(myResponse):
    #print (myResponse.status_code)
 
-   # For successful API call, response code will be 200 (OK) or 201 (Created)
+   # For a successful API call, response code will be 200 (OK) or 201 (Created)
    if(myResponse.ok):
-     # Loading the response data into a dict variable
-     # json.loads takes in only binary or string variables so using content to fetch binary content
      # Loads (Load String) takes a Json file and converts into python data structure (dict or list, depending on JSON)
      jData = json.loads(myResponse.content)
- 
      #print("The response contains {0} properties".format(len(jData))) + "\n"
      for key in jData:
          print key + " : ", jData[key]
      print "\n";
    else:
-     # If response code is not ok, print the resulting http error code with description
      myResponse.raise_for_status()
      pprint(vars(myResponse))
 
@@ -55,7 +53,7 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:
-   print 'error: decoding JSON failed ...', e
+   print msg_json_error, e
 
 try:
    print "Create a request to add a pet:\n";
@@ -66,7 +64,7 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:
-   print 'error: decoding JSON failed ...', e
+   print msg_json_error, e
 
 try:
    print "Create a request to do a simple health check:\n";
@@ -75,7 +73,7 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:
-   print 'error: decoding JSON failed ...', e
+   print msg_json_error, e
 
 try:
    print "Create a request to fetch list of pets:\n";
@@ -84,6 +82,6 @@ try:
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:
-   print 'error: decoding JSON failed ...', e
+   print msg_json_error, e
 
 exit(0)
