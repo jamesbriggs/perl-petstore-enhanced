@@ -21,29 +21,35 @@ admin_password=$PETS_ADMIN_PASSWORD
 
 url="${scheme}${domain}${base_url}"
 
-curl_options="-sS --max-time $timeout --basic -u $user:$password"
+options="-sS --max-redirs 3 --max-time $timeout"
+auth_options="--basic -u $user:$password"
+admin_auth_options="--basic -u $admin_user:$admin_password"
 
 echo "Get list of pets:"
-curl $curl_options ${url}/pets -w "\n"
+curl $options $auth_options ${url}/pets -w "\n"
 echo
 
 echo "Get one pet:"
-curl $curl_options ${url}/pets/1 -w "\n"
+curl $options $auth_options ${url}/pets/1 -w "\n"
 echo
 
 # http://search.cpan.org/~ams/Mojolicious-4.26/lib/Mojolicious/Guides/Rendering.pod#Encoding
 echo "Get one pet gzip => gunzip:"
-curl $curl_options -H "Accept-Encoding: gzip" ${url}/pets/1 -w "\n" | zcat -q | cat
+curl $options $auth_options -H "Accept-Encoding: gzip, deflate" ${url}/pets/1 -w "\n" | zcat -q | cat
 echo
 
 echo "Add one pet using HERE document:"
-curl $curl_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary @- ${url}/pets <<EOF
+curl $options $auth_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary @- ${url}/pets <<EOF
 {"name": "zebra"}
 EOF
 echo
 
 echo "Add one pet inline:"
-curl $curl_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary '{"name": "zebra"}' ${url}/pets
+curl $options $auth_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary '{"name": "zebra"}' ${url}/pets
+echo
+
+echo "Basic health check:"
+curl $options $admin_auth_options -w "\n" ${url}/admin/ping
 echo
 
 exit 0
