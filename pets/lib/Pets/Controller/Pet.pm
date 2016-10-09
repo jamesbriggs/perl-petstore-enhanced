@@ -133,6 +133,27 @@ sub menu {
   }
 }
 
+sub delete {
+  my ($c, $args, $cb) = @_;
+
+  my $id = $args->{'petId'};
+
+  my $response_code = 404;
+
+  if (exists $pets{$id}) {
+     delete $pets{$id};
+
+     $response_code = 204;
+  }
+
+  if ($cb) {           # Swagger2 request
+     $c->$cb([], $response_code);
+  }
+  else {
+     $c->render({}, $response_code);
+  }
+}
+
 sub create {
   my ($c, $args, $cb) = @_;
 
@@ -155,6 +176,7 @@ sub create {
     my $n = 1 + scalar keys %pets;
     $pets{$n} = $name;
     $c->$cb( [ $name ], 201);
+    $c->res->headers->append('Location' => set_url($c, 'pets') . "/$n");
   }
   else {               # Web request
     $c->render( { $name } );

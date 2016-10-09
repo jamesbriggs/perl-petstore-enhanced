@@ -153,6 +153,26 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/Error'
+    delete:
+      summary: Delete a specific pet
+      operationId: DeletePetById
+      tags:
+        - pets
+      parameters:
+        - name: petId
+          in: path
+          required: true
+          description: The id of the pet to delete
+          type: string
+      responses:
+        '204':
+          description: Expected response to a valid request
+        '404':
+          description: Not found
+        default:
+          description: unexpected error
+          schema:
+            $ref: '#/definitions/Error'
 definitions:
   Pet:
     required:
