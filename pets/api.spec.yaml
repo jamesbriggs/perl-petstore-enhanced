@@ -155,7 +155,7 @@ paths:
             $ref: '#/definitions/Error'
     delete:
       summary: Delete a specific pet
-      operationId: DeletePetById
+      operationId: deletePetById
       tags:
         - pets
       parameters:

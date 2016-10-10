@@ -61,6 +61,13 @@ try:
    data_json = json.dumps(data)
    myResponse = requests.put(url + "/pets", auth=HTTPBasicAuth(user, password), data=data_json, headers=headers, timeout=timeout)
    output(myResponse)
+
+   location = myResponse.headers['Location']
+
+   print "Create a request to delete a pet:\n";
+   print "location: " + location + "\n"
+   myResponse = requests.delete(location, auth=HTTPBasicAuth(user, password), headers=headers, timeout=timeout)
+   output(myResponse)
 except requests.exceptions.RequestException as e:
    print e
 except ValueError as e:
@@ -75,13 +82,17 @@ except requests.exceptions.RequestException as e:
 except ValueError as e:
    print msg_json_error, e
 
+# the metadata block may be confusing python's JSON parser
 try:
    print "Create a request to fetch list of pets:\n";
    myResponse = requests.get(url + "/pets", auth=HTTPBasicAuth(user, password), headers=headers, timeout=timeout)
    output(myResponse)
 except requests.exceptions.RequestException as e:
+   print vars(myResponse)
    print e
 except ValueError as e:
+   print vars(myResponse)
    print msg_json_error, e
 
 exit(0)
+
