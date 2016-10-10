@@ -28,18 +28,41 @@ use LWP::UserAgent;
    $ua->timeout($ENV{'PETS_TIMEOUT'} || 10);
 
 # Add auth token to user agent
+   $ua->default_header('Authorization' => 'Basic ' . encode_base64("$admin_api_key:$admin_api_password", ''));
+
+{
+# Create a request to do a simple health check
+   my $req = HTTP::Request->new(GET => $url . '/admin/ping');
+
+# Pass request to the user agent and get a response back
+   my $res = $ua->request($req);
+
+   print "info: request #1 - simple health check\n";
+
+# Check the outcome of the response
+   if ($res->is_success) {
+      print $res->content, "\n";
+   }
+   else {
+      print $res->status_line, "\n";
+      exit 6;
+   }
+}
+
+# Add auth token to user agent
    $ua->default_header('Authorization' => 'Basic ' . encode_base64("$api_key:$api_password", ''));
 
 {
 # Create a request for the first page of pets
    my $req = HTTP::Request->new(GET => $url . '/pets');
+
 # Or add auth token to each request
    $req->header('Authorization' => 'Basic ' . encode_base64("$api_key:$api_password", ''));
 
 # Pass request to the user agent and get a response back
    my $res = $ua->request($req);
 
-   print "info: request #1 - show first page of pets\n";
+   print "info: request #2 - show first page of pets\n";
 
 # Check the outcome of the response
    if ($res->is_success) {
@@ -58,7 +81,7 @@ use LWP::UserAgent;
 # Pass request to the user agent and get a response back
    my $res = $ua->request($req);
 
-   print "info: request #2 - get one pet\n";
+   print "info: request #3 - get one pet\n";
 
 # Check the outcome of the response
    if ($res->is_success) {
@@ -67,6 +90,49 @@ use LWP::UserAgent;
    else {
       print $res->status_line, "\n";
       exit 2;
+   }
+}
+
+{
+# Create a request to add a pet with a POST override in the headers
+   my $req = HTTP::Request->new(POST => $url . '/pets');
+   $req->header('X-HTTP-Method-Override' => 'PUT');
+   $req->content_type('application/json');
+   $req->content('{"name": "zebra"}');
+
+# Pass request to the user agent and get a response back
+   my $res = $ua->request($req);
+
+   print "info: request #4 - add a pet using POST override\n";
+
+# Check the outcome of the response
+   if ($res->is_success) {
+      print $res->content, "\n";
+   }
+   else {
+      print $res->status_line, "\n";
+      exit 5;
+   }
+}
+
+{
+# Create a request to add a duplicate pet
+   my $req = HTTP::Request->new(PUT => $url . '/pets');
+   $req->content_type('application/json');
+   $req->content('{"name": "alligator"}');
+
+# Pass request to the user agent and get a response back
+   my $res = $ua->request($req);
+
+   print "info: request #5 - try to add a duplicate pet\n";
+
+# Check the outcome of the response
+   if ($res->is_success) {
+      print $res->content, "\n";
+   }
+   else {
+      print $res->status_line, "\n";
+      # exit 4;
    }
 }
 
@@ -82,7 +148,7 @@ use LWP::UserAgent;
 # Pass request to the user agent and get a response back
    my $res = $ua->request($req);
 
-   print "info: request #3 - add a pet\n";
+   print "info: request #6 - add a pet\n";
 
 # Check the outcome of the response
    if ($res->is_success) {
@@ -100,7 +166,7 @@ use LWP::UserAgent;
 # Pass request to the user agent and get a response back
       my $res = $ua->delete($location);
 
-      print "info: request #3b - delete a pet\n";
+      print "info: request #7 - delete a pet\n";
 
 # Check the outcome of the response
       if ($res->is_success) {
@@ -110,70 +176,6 @@ use LWP::UserAgent;
          print $res->status_line, "\n";
          exit 3;
       }
-   }
-}
-
-{
-# Create a request to add a duplicate pet
-   my $req = HTTP::Request->new(PUT => $url . '/pets');
-   $req->content_type('application/json');
-   $req->content('{"name": "alligator"}');
-
-# Pass request to the user agent and get a response back
-   my $res = $ua->request($req);
-
-   print "info: request #4 - try to add a duplicate pet\n";
-
-# Check the outcome of the response
-   if ($res->is_success) {
-      print $res->content, "\n";
-   }
-   else {
-      print $res->status_line, "\n";
-      # exit 4;
-   }
-}
-
-{
-# Create a request to add a pet with a POST override in the headers
-   my $req = HTTP::Request->new(POST => $url . '/pets');
-   $req->header('X-HTTP-Method-Override' => 'PUT');
-   $req->content_type('application/json');
-   $req->content('{"name": "zebra"}');
-
-# Pass request to the user agent and get a response back
-   my $res = $ua->request($req);
-
-   print "info: request #5 - add a pet using POST override\n";
-
-# Check the outcome of the response
-   if ($res->is_success) {
-      print $res->content, "\n";
-   }
-   else {
-      print $res->status_line, "\n";
-      exit 5;
-   }
-}
-
-   $ua->default_header('Authorization' => 'Basic ' . encode_base64("$admin_api_key:$admin_api_password", ''));
-
-{
-# Create a request to do a simple health check
-   my $req = HTTP::Request->new(GET => $url . '/admin/ping');
-
-# Pass request to the user agent and get a response back
-   my $res = $ua->request($req);
-
-   print "info: request #6 - simple health check\n";
-
-# Check the outcome of the response
-   if ($res->is_success) {
-      print $res->content, "\n";
-   }
-   else {
-      print $res->status_line, "\n";
-      exit 6;
    }
 }
 
