@@ -29,6 +29,8 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 
   +/pets           PUT  "createPets"
 
+  +/pets        DELETE  "deletePets"
+
   +/admin/ping     GET  "pingPets"
 
   +/admin/menu     GET  "menuPets"
@@ -46,6 +48,7 @@ Perl Swagger2 lets you define your API spec in YAML or JSON, then automatically 
 - content negotiation with ?format=json and ?format=xml to automatically select output format for non-documentation routes
 - HTTP method override for client programs to use POST with X-HTTP-Method-Override: {PATCH, PUT, DELETE} where necessary
 - Param and Basic Authentication for both API and browser clients. Default is username=Perl, password=Bender.     
+- non-trivial sample code for several programming languages (bash, Perl, PHP, Python, Ruby) in samples/ with authentication, error handling and timeout.
 
 **Developer Features**
 
