@@ -19,6 +19,8 @@ password=$PETS_PASSWORD
 admin_user=$PETS_ADMIN_USER
 admin_password=$PETS_ADMIN_PASSWORD
 
+file_headers="headers_curl.txt"
+
 url="${scheme}${domain}${base_url}"
 
 options="-sS --max-redirs 3 --max-time $timeout"
@@ -49,9 +51,17 @@ ret=$?
 echo -e "ret=$ret\n"
 
 echo "Add one pet inline:"
-curl $options $auth_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary '{"name": "zebra"}' ${url}/pets
+curl $options -D $file_headers $auth_options -H 'Content-type: application/json' -w "\n" -X PUT --data-binary '{"name": "zebra"}' ${url}/pets
 ret=$?
 echo -e "ret=$ret\n"
+
+location=`awk '/Location/{sub(/\r$/,""); print $2}' < $file_headers`
+
+echo "Delete one pet"
+rc=`curl $options -o /dev/null -I -w "%{http_code}" $auth_options -X DELETE $location`
+ret=$?
+echo -e "ret=$ret\n"
+echo "rc=$rc"
 
 echo "Basic health check:"
 curl $options $admin_auth_options -w "\n" ${url}/admin/ping
