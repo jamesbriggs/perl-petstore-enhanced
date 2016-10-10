@@ -25,5 +25,5 @@ mojo swagger2 pod api.spec | pod2html >html/public/pets.html
 prove
 MOJO_CLIENT_DEBUG=1 prove t/basic.t
 
-rm --preserve-root *.tmp
+rm --preserve-root *.tmp samples/{headers_curl.txt,wget.log}
 
