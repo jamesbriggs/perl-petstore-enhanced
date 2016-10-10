@@ -60,8 +60,8 @@ location=`awk '/Location/{sub(/\r$/,""); print $2}' < $file_headers`
 echo "Delete one pet"
 rc=`curl $options -o /dev/null -I -w "%{http_code}" $auth_options -X DELETE $location`
 ret=$?
-echo -e "ret=$ret\n"
 echo "rc=$rc"
+echo -e "ret=$ret\n"
 
 echo "Basic health check:"
 curl $options $admin_auth_options -w "\n" ${url}/admin/ping
