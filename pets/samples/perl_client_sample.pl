@@ -11,6 +11,7 @@ use strict;
 use diagnostics;
 
 use MIME::Base64 qw(encode_base64);
+use LWP::UserAgent;
 
    my $url = $ENV{'PETS_SCHEME'} . $ENV{'PETS_DOMAIN'} . $ENV{'PETS_BASE_URL'};
 
@@ -21,8 +22,6 @@ use MIME::Base64 qw(encode_base64);
    my $admin_api_password = $ENV{'PETS_ADMIN_PASSWORD'};
 
 # Create a user agent object
-   use LWP::UserAgent;
-
    my $ua = LWP::UserAgent->new;
    $ua->agent("PetstorePerlBot/0.1");
    $ua->from('perlbot@example.com');
@@ -72,6 +71,9 @@ use MIME::Base64 qw(encode_base64);
 }
 
 {
+   my $success = 0;
+   my $location = '';
+
 # Create a request to add a pet
    my $req = HTTP::Request->new(PUT => $url . '/pets');
    $req->content_type('application/json');
@@ -85,10 +87,29 @@ use MIME::Base64 qw(encode_base64);
 # Check the outcome of the response
    if ($res->is_success) {
       print $res->content, "\n";
+      $location = $res->header('Location');
+      $success = 1;
    }
    else {
       print $res->status_line, "\n";
       exit 3;
+   }
+
+   if ($success and $location ne '') {
+# Create a request to delete a pet
+# Pass request to the user agent and get a response back
+      my $res = $ua->delete($location);
+
+      print "info: request #3b - delete a pet\n";
+
+# Check the outcome of the response
+      if ($res->is_success) {
+      }
+      else {
+         print "location=$location\n";
+         print $res->status_line, "\n";
+         exit 3;
+      }
    }
 }
 
@@ -135,7 +156,6 @@ use MIME::Base64 qw(encode_base64);
    }
 }
 
-# Add admin auth token to user agent
    $ua->default_header('Authorization' => 'Basic ' . encode_base64("$admin_api_key:$admin_api_password", ''));
 
 {

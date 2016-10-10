@@ -1,6 +1,7 @@
 # Program: basic.t
 # Purpose: test harness program
 # Env: Perl5
+# Copyright: James Briggs USA 2016
 # Usage: source ../set.sh; prove basic.t
 #        cd ..; source set.sh; prove
 # Returns: exit status is non-zero on failure
@@ -66,7 +67,14 @@ use constant MAX_REDIRECTS => 3;
    }
 
    $url = $url->path("$base_url/pets");
-   $t->put_ok($url => {Accept => "*/*"} => json => { name => "zebra" })->status_is(201);
+   my $r = $t->put_ok($url => {Accept => "*/*"} => json => { name => "zebra" })->status_is(201);
+
+   my $location = $r->tx->res->headers->location;
+
+   # $t->delete_ok($location)->status_is(204)->content_like(qr//);
+   $t->delete_ok($location);
+
+exit;
 
    $url = $url->path("$base_url/pets");
    $t->put_ok($url => {Accept => "*/*"} => json => { name => "alligator" })->status_is(409);
