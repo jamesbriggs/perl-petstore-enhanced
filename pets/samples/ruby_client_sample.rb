@@ -41,8 +41,8 @@ class Pets
     self.class.put(url, :body => text.to_json)
   end
 
-  def delete(url, text)
-    self.class.delete(url, :body => text.to_json)
+  def delete(url)
+    self.class.delete(url)
   end
 end
 
@@ -60,7 +60,8 @@ rescue => e
 end
 
 begin
-   puts "Update one pet:"
+   success = 0
+   puts "Add one pet:"
    data = {
       'name' => 'zebra'
    }
@@ -68,8 +69,21 @@ begin
    response = Pets.new(user, pass).put(url, data)
    if response.code == 201
       puts response.body, "\n"
+      success = 1
    else
       puts response.inspect, "\n"
+   end
+
+   location = response.headers['Location']
+   puts "info: location=" + location
+
+   if success
+      puts "   Delete one pet:"
+      response = Pets.new(user, pass).delete(location)
+      if response.code == 204
+      else
+         puts response.inspect, "\n"
+      end
    end
 rescue => e
   puts "Rescued: #{e.inspect}", "\n"
