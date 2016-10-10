@@ -74,8 +74,6 @@ use constant MAX_REDIRECTS => 3;
    # $t->delete_ok($location)->status_is(204)->content_like(qr//);
    $t->delete_ok($location);
 
-exit;
-
    $url = $url->path("$base_url/pets");
    $t->put_ok($url => {Accept => "*/*"} => json => { name => "alligator" })->status_is(409);
 
