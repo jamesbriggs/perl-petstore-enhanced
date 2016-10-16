@@ -6,14 +6,16 @@ Steps:
 
 1. source ../set.sh
 2. ./curl_client_sample.sh
-3. ./perl_client_sample.pl
-4. ./php_client_sample.pl
-5. ./python_client_sample.py
-6. ./ruby_client_sample.rb
-7. ./wget_client_sample.sh (curl is more REST API-friendly, so use curl if possible)
+3. ./JavaClientSample.java
+4. ./perl_client_sample.pl
+5. ./php_client_sample.pl
+6. ./python_client_sample.py
+7. ./ruby_client_sample.rb
+8. ./wget_client_sample.sh (curl is more REST API-friendly, so use curl if possible)
 
 These are short but non-trivial programs with features such as:
 
+- GET, PUT, DELETE methods
 - HTTP basic authentication
 - connection timeout
 - error handling based on HTTP response codes
