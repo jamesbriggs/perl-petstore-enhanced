@@ -8,7 +8,6 @@
 
 import java.util.List;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,7 +48,7 @@ public class JavaClientSample {
 
       JavaClientSample obj = new JavaClientSample();
 
-      // response dictionary with HTTP response headers, response code and content body
+      // response Map with HTTP response headers, response code and content body
       Map<String, List<String>> r;
 
       try {
@@ -75,8 +74,11 @@ public class JavaClientSample {
 
       try {
          System.out.println("3. Add one pet");
-         JSONObject json = new JSONObject();
+
+         @SuppressWarnings("unchecked")
+         Map<String, String> json = new JSONObject();
          json.put("name", "zebra");
+
          String data = new String(json.toString());
          r = obj.send(url + "/pets", username, password, timeout, data, "PUT");
          System.out.println(r.get("body").get(0)+"\n");
@@ -150,23 +152,12 @@ public class JavaClientSample {
       }
       in.close();
 
-      // get a read-only copy of headers
-      Map<String, List<String>> headerFields = con.getHeaderFields();
-
-      // get a writable copy of headers to add body and response code
-      HashMap h = new HashMap();
+      // getHeaderFields() returns an unmodifiable Map of the header fields so ...
+      // Make a writable copy of headers to add body and response code
+      Map<String, List<String>> h = new HashMap<String, List<String>>(con.getHeaderFields());
+      
       h.put("body", Arrays.asList(response.toString()));
       h.put("response-code", Arrays.asList(String.valueOf(responseCode)));
-
-      // append headers
-      Iterator it = headerFields.entrySet().iterator();
-      while (it.hasNext()) {
-        Map.Entry pair = (Map.Entry)it.next();
-        // http://stackoverflow.com/questions/16070070/why-does-list-removeint-throw-java-lang-unsupportedoperationexception
-        // System.out.println(pair.getKey());
-        // h.put(pair.getKey(), Arrays.asList(pair.getValue()));
-        h.put(pair.getKey(), pair.getValue());
-      }
 
       return h;
    }

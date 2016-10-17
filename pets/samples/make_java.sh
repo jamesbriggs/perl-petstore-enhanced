@@ -11,7 +11,8 @@
 source ../set.sh
 
 java="/usr/bin/java -client"
-javac="/usr/bin/javac -g:none -Xlint:all"
+#javac="/usr/bin/javac -g:none -Xlint:all"
+javac="/usr/bin/javac -Xlint:all"
 opt=""
 class=JavaClientSample
 
