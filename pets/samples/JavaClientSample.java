@@ -48,6 +48,9 @@ public class JavaClientSample {
 
       JavaClientSample obj = new JavaClientSample();
 
+      HttpURLConnection.setFollowRedirects(true);
+      System.setProperty("http.maxRedirects", "3");
+
       // response Map with HTTP response headers, response code and content body
       Map<String, List<String>> r;
 
@@ -75,6 +78,7 @@ public class JavaClientSample {
       try {
          System.out.println("3. Add one pet");
 
+         // Xlint gripes because json-simple relies on raw Map
          @SuppressWarnings("unchecked")
          Map<String, String> json = new JSONObject();
          json.put("name", "zebra");
@@ -117,7 +121,7 @@ public class JavaClientSample {
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
 
-      //add request header
+      // Set request headers
       con.setRequestMethod(method);
       con.setRequestProperty("User-Agent", USER_AGENT);
       con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
@@ -140,6 +144,7 @@ public class JavaClientSample {
          wr.close();
       }
 
+      // Get response headers
       int responseCode = con.getResponseCode();
 
       BufferedReader in = new BufferedReader(
