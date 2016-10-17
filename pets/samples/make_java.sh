@@ -10,8 +10,8 @@
 
 source ../set.sh
 
-java=/usr/bin/java
-javac=/usr/bin/javac
+java="/usr/bin/java -client"
+javac="/usr/bin/javac -g:none -Xlint:all"
 opt=""
 class=JavaClientSample
 

@@ -29,8 +29,6 @@ public class JavaClientSample {
 
    public static void main(String[] args) throws Exception {
 
-      JavaClientSample o = new JavaClientSample();
-
       int timeout = 0;
 
       try {
@@ -41,32 +39,35 @@ public class JavaClientSample {
          System.exit(1);
       }
 
-      String url      = System.getenv("PETS_SCHEME") + System.getenv("PETS_DOMAIN") + System.getenv("PETS_BASE_URL");
+      final String url      = System.getenv("PETS_SCHEME") + System.getenv("PETS_DOMAIN") + System.getenv("PETS_BASE_URL");
 
-      String username = System.getenv("PETS_USER");
-      String password = System.getenv("PETS_PASSWORD");
+      final String username = System.getenv("PETS_USER");
+      final String password = System.getenv("PETS_PASSWORD");
 
-      String admin_username = System.getenv("PETS_ADMIN_USER");
-      String admin_password = System.getenv("PETS_ADMIN_PASSWORD");
+      final String admin_username = System.getenv("PETS_ADMIN_USER");
+      final String admin_password = System.getenv("PETS_ADMIN_PASSWORD");
 
-      Map<String, List<String>> h;
+      JavaClientSample obj = new JavaClientSample();
+
+      // response dictionary with HTTP response headers, response code and content body
+      Map<String, List<String>> r;
 
       try {
          System.out.println("1. Get list of pets");
-         h = o.send(url + "/pets", username, password, timeout, "", "GET");
-         System.out.println(h.get("body").get(0)+"\n");
+         r = obj.send(url + "/pets", username, password, timeout, "", "GET");
+         System.out.println(r.get("body").get(0)+"\n");
       }
       catch (IOException e) {
-         System.out.println(e+"\n");
+         System.out.println(e);
       }
 
       try {
          System.out.println("2. Get one pet");
-         h = o.send(url + "/pets/1", username, password, timeout, "", "GET");
-         System.out.println(h.get("body").get(0)+"\n");
+         r = obj.send(url + "/pets/1", username, password, timeout, "", "GET");
+         System.out.println(r.get("body").get(0)+"\n");
       }
       catch (IOException e) {
-         System.out.println(e+"\n");
+         System.out.println(e);
       }
 
       String location = "";
@@ -77,35 +78,34 @@ public class JavaClientSample {
          JSONObject json = new JSONObject();
          json.put("name", "zebra");
          String data = new String(json.toString());
-         h = o.send(url + "/pets", username, password, timeout, data, "PUT");
-         System.out.println(h.get("body").get(0)+"\n");
+         r = obj.send(url + "/pets", username, password, timeout, data, "PUT");
+         System.out.println(r.get("body").get(0)+"\n");
 
-         location = h.get("Location").get(0);
-         rc = Integer.valueOf(h.get("response-code").get(0));
+         location = r.get("Location").get(0);
+         rc = Integer.valueOf(r.get("response-code").get(0));
       }
       catch (IOException e) {
-         System.out.println(e+"\n");
+         System.out.println(e);
       }
 
       if (rc == 201) {
          try {
-            String data = "";
             System.out.println("4. Delete one pet");
-            h = o.send(location, username, password, timeout, data, "DELETE");
-            System.out.println(h.get("body").get(0)+"\n");
+            r = obj.send(location, username, password, timeout, "", "DELETE");
+            System.out.println(r.get("body").get(0)+"\n");
          }
          catch (IOException e) {
-            System.out.println(e+"\n");
+            System.out.println(e);
          }
       }
 
       try {
          System.out.println("5. Do health check");
-         h = o.send(url + "/admin/ping", admin_username, admin_password, timeout, "", "GET");
-         System.out.println(h.get("body").get(0)+"\n");
+         r = obj.send(url + "/admin/ping", admin_username, admin_password, timeout, "", "GET");
+         System.out.println(r.get("body").get(0)+"\n");
       }
       catch (IOException e) {
-         System.out.println(e+"\n");
+         System.out.println(e);
       }
    }
 
