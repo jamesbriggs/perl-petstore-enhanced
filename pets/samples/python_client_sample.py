@@ -1,7 +1,5 @@
 #!/usr/bin/python
 
-# pylint: disable=C0103
-
 """This is a python sample client for Perl Petstore Enhanced API Server."""
 
 # Program: python_client_sample.py
@@ -53,71 +51,77 @@ def output(s):
     # end if
 # end def output
 
-try:
-    print "Create a request to fetch a pet:\n"
-    myResponse = requests.get(url + "/pets/1", \
-                              auth=HTTPBasicAuth(user, password), \
-                              headers=headers, \
-                              timeout=timeout)
-    output(myResponse)
-except requests.exceptions.RequestException as e:
-    print e
-except ValueError as e:
-    print msg_json_error, e
-# end try
+def main():
+    '''Entry point if called as an executable'''
+    
+    try:
+        print "Create a request to fetch a pet:\n"
+        myResponse = requests.get(url + "/pets/1", \
+                                  auth=HTTPBasicAuth(user, password), \
+                                  headers=headers, \
+                                  timeout=timeout)
+        output(myResponse)
+    except requests.exceptions.RequestException as e:
+        print e
+    except ValueError as e:
+        print msg_json_error, e
+    # end try
+    
+    try:
+        print "Create a request to add a pet:\n"
+        data = {"name" : "zebra"}
+        data_json = json.dumps(data)
+        myResponse = requests.put(url + "/pets", \
+                                  auth=HTTPBasicAuth(user, password), \
+                                  data=data_json, \
+                                  headers=headers, \
+                                  timeout=timeout)
+        output(myResponse)
+        location = myResponse.headers['Location']
+        print "Create a request to delete a pet:\n"
+        print "location: " + location + "\n"
+        myResponse = requests.delete(location, \
+                                     auth=HTTPBasicAuth(user, password), \
+                                     headers=headers, \
+                                     timeout=timeout)
+        output(myResponse)
+    except requests.exceptions.RequestException as e:
+        print e
+    except ValueError as e:
+        print msg_json_error, e
+    # end try
+    
+    try:
+        print "Create a request to do a simple health check:\n"
+        myResponse = requests.get(url+'/admin/ping', \
+                                  auth=HTTPBasicAuth(admin_user, admin_password), \
+                                  timeout=timeout)
+        output(myResponse)
+    except requests.exceptions.RequestException as e:
+        print e
+    except ValueError as e:
+        print msg_json_error, e
+    # end try
+    
+    # the metadata block may be confusing python's JSON parser
+    try:
+        print "Create a request to fetch list of pets:\n"
+        myResponse = requests.get(url + "/pets", \
+                                  auth=HTTPBasicAuth(user, password), \
+                                  headers=headers, \
+                                  timeout=timeout)
+        output(myResponse)
+    except requests.exceptions.RequestException as e:
+        print vars(myResponse)
+        print e
+    except ValueError as e:
+        print vars(myResponse)
+        print msg_json_error, e
+    # end try
+    
+    exit(0)
+# end def main
 
-try:
-    print "Create a request to add a pet:\n"
-    data = {"name" : "zebra"}
-    data_json = json.dumps(data)
-    myResponse = requests.put(url + "/pets", \
-                              auth=HTTPBasicAuth(user, password), \
-                              data=data_json, \
-                              headers=headers, \
-                              timeout=timeout)
-    output(myResponse)
-    location = myResponse.headers['Location']
-    print "Create a request to delete a pet:\n"
-    print "location: " + location + "\n"
-    myResponse = requests.delete(location, \
-                                 auth=HTTPBasicAuth(user, password), \
-                                 headers=headers, \
-                                 timeout=timeout)
-    output(myResponse)
-except requests.exceptions.RequestException as e:
-    print e
-except ValueError as e:
-    print msg_json_error, e
-# end try
-
-try:
-    print "Create a request to do a simple health check:\n"
-    myResponse = requests.get(url+'/admin/ping', \
-                              auth=HTTPBasicAuth(admin_user, \
-                              admin_password), \
-                              timeout=timeout)
-    output(myResponse)
-except requests.exceptions.RequestException as e:
-    print e
-except ValueError as e:
-    print msg_json_error, e
-# end try
-
-# the metadata block may be confusing python's JSON parser
-try:
-    print "Create a request to fetch list of pets:\n"
-    myResponse = requests.get(url + "/pets", \
-                              auth=HTTPBasicAuth(user, password), \
-                              headers=headers, \
-                              timeout=timeout)
-    output(myResponse)
-except requests.exceptions.RequestException as e:
-    print vars(myResponse)
-    print e
-except ValueError as e:
-    print vars(myResponse)
-    print msg_json_error, e
-# end try
-
-exit(0)
-
+if __name__ == '__main__':
+    main()
+# end if
