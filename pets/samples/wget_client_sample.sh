@@ -39,7 +39,7 @@ echo -e "\nret=$ret\n"
 # http://search.cpan.org/~ams/Mojolicious-4.26/lib/Mojolicious/Guides/Rendering.pod#Encoding
 echo "Get one pet gzip => gunzip:"
 wget $options $auth_options --header "Accept-Encoding: gzip, deflate" ${url}/pets/1 | zcat -q
-ret=$PIPESTATUS
+ret=$PIPESTATUS[0]
 echo -e "\nret=$ret\n"
 
 echo "Add one pet:"
