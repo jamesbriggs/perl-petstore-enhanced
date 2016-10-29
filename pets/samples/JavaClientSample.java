@@ -120,50 +120,55 @@ public class JavaClientSample {
 
       URL obj = new URL(url);
       HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+      BufferedReader in = null;
+      DataOutputStream wr = null;
 
-      // Set request headers
-      con.setRequestMethod(method);
-      con.setRequestProperty("User-Agent", USER_AGENT);
-      con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
-      // con.setRequestProperty("Accept-Encoding", "gzip, deflate");
-      con.setRequestProperty("Content-Type", "application/json");
+      try {
+         // Set request headers
+         con.setRequestMethod(method);
+         con.setRequestProperty("User-Agent", USER_AGENT);
+         con.setRequestProperty("Accept-Language", "en-US,en;q=0.5");
+         // con.setRequestProperty("Accept-Encoding", "gzip, deflate");
+         con.setRequestProperty("Content-Type", "application/json");
 
-      con.setConnectTimeout(timeout);
-      con.setReadTimeout(timeout);
+         con.setConnectTimeout(timeout);
+         con.setReadTimeout(timeout);
 
-      String encoded = Base64.getEncoder().encodeToString((username+":"+password).getBytes("UTF-8"));
-      con.setRequestProperty("Authorization", "Basic "+encoded);
+         String encoded = Base64.getEncoder().encodeToString((username+":"+password).getBytes("UTF-8"));
+         con.setRequestProperty("Authorization", "Basic "+encoded);
 
-      // Send request
-      con.setDoOutput(true);
+         // Send request
+         con.setDoOutput(true);
 
-      if (method.equals("POST") || method.equals("PUT")) {
-         DataOutputStream wr = new DataOutputStream(con.getOutputStream());
-         wr.writeBytes(data);
-         wr.flush();
-         wr.close();
-      }
+         if (method.equals("POST") || method.equals("PUT")) {
+            wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(data);
+            wr.flush();
+         }
 
-      // Get response headers
-      int responseCode = con.getResponseCode();
+         // Get response headers
+         int responseCode = con.getResponseCode();
 
-      BufferedReader in = new BufferedReader(
-        new InputStreamReader(con.getInputStream()));
-      String inputLine;
-      StringBuffer response = new StringBuffer();
+         String inputLine;
+         StringBuffer response = new StringBuffer();
 
-      while ((inputLine = in.readLine()) != null) {
-         response.append(inputLine).append("\n");
-      }
-      in.close();
+         in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+         while ((inputLine = in.readLine()) != null) {
+            response.append(inputLine).append("\n");
+         }
 
-      // getHeaderFields() returns an unmodifiable Map of the header fields so ...
-      // Make a writable copy of headers to add body and response code
-      Map<String, List<String>> h = new HashMap<String, List<String>>(con.getHeaderFields());
-      
-      h.put("body", Arrays.asList(response.toString()));
-      h.put("response-code", Arrays.asList(String.valueOf(responseCode)));
+         // getHeaderFields() returns an unmodifiable Map of the header fields so ...
+         // Make a writable copy of headers to add body and response code
+         Map<String, List<String>> h = new HashMap<String, List<String>>(con.getHeaderFields());
 
-      return h;
+         h.put("body", Arrays.asList(response.toString()));
+         h.put("response-code", Arrays.asList(String.valueOf(responseCode)));
+
+         return h;
+     } finally {
+         if (con != null) con.disconnect();
+         if (wr != null) wr.close();
+         if (in != null) in.close();
+     }
    }
 }
