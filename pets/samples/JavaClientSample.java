@@ -57,7 +57,7 @@ public class JavaClientSample {
       try {
          System.out.println("1. Get list of pets");
          r = obj.send(url + "/pets", username, password, timeout, "", "GET");
-         System.out.println(r.get("body").get(0)+"\n");
+         System.out.println(r.get("body").get(0));
       }
       catch (IOException e) {
          System.out.println(e);
@@ -66,7 +66,7 @@ public class JavaClientSample {
       try {
          System.out.println("2. Get one pet");
          r = obj.send(url + "/pets/1", username, password, timeout, "", "GET");
-         System.out.println(r.get("body").get(0)+"\n");
+         System.out.println(r.get("body").get(0));
       }
       catch (IOException e) {
          System.out.println(e);
@@ -85,7 +85,7 @@ public class JavaClientSample {
 
          String data = new String(json.toString());
          r = obj.send(url + "/pets", username, password, timeout, data, "PUT");
-         System.out.println(r.get("body").get(0)+"\n");
+         System.out.println(r.get("body").get(0));
 
          location = r.get("Location").get(0);
          rc = Integer.valueOf(r.get("response-code").get(0));
@@ -98,7 +98,7 @@ public class JavaClientSample {
          try {
             System.out.println("4. Delete one pet");
             r = obj.send(location, username, password, timeout, "", "DELETE");
-            System.out.println(r.get("body").get(0)+"\n");
+            System.out.println(r.get("body").get(0));
          }
          catch (IOException e) {
             System.out.println(e);
@@ -108,7 +108,7 @@ public class JavaClientSample {
       try {
          System.out.println("5. Do health check");
          r = obj.send(url + "/admin/ping", admin_username, admin_password, timeout, "", "GET");
-         System.out.println(r.get("body").get(0)+"\n");
+         System.out.println(r.get("body").get(0));
       }
       catch (IOException e) {
          System.out.println(e);
@@ -153,7 +153,7 @@ public class JavaClientSample {
       StringBuffer response = new StringBuffer();
 
       while ((inputLine = in.readLine()) != null) {
-         response.append(inputLine);
+         response.append(inputLine).append("\n");
       }
       in.close();
 
