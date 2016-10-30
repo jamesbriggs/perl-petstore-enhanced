@@ -14,6 +14,7 @@ package main
 
 import (
         "bytes"
+        "encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -33,6 +34,11 @@ func redirectPolicyFunc(req *http.Request, via []*http.Request) error {
 }
 
 func main() {
+
+   type Pet struct { // if you want to understand this, see https://golang.org/pkg/encoding/json/#Marshal
+      Name string `json:"name"`
+   }
+
    username := os.Getenv("PETS_USER")
    password := os.Getenv("PETS_PASSWORD")
 
@@ -100,10 +106,15 @@ func main() {
    {
       fmt.Printf("%s\n", "Add one pet")
 
-//    avoid using the the overly-complicated "encoding/json"
-      var jsonStr = []byte(`{"name":"zebra"}`)
+//    to avoid using the the overly-complicated "encoding/json" marshaling
+//    var data = []byte(`{"name":"zebra"}`)
 
-      req, err := http.NewRequest("PUT", url + "/pets", bytes.NewBuffer(jsonStr))
+      m := Pet{Name: "zebra"}
+      b, err := json.Marshal(m)
+      data := bytes.NewBuffer(b)
+
+      req, err := http.NewRequest("PUT", url + "/pets", data)
+
       req.Header.Set("Content-Type", "application/json")
       req.SetBasicAuth(g_username, g_password)
 
