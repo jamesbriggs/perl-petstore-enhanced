@@ -6,9 +6,9 @@
 // Env: Go
 // Returns: exit status is non-zero on failure
 // Usage: go run go_client_sample.go
-// Note: source ../set.sh
+// Notes: first do, source ../set.sh
 // Also: this project looks nice too: https://github.com/parnurzeal/gorequest
-// See: for status code methods, see https://golang.org/pkg/net/http/
+// See: for http status code methods, see https://golang.org/pkg/net/http/
 
 package main
 
@@ -19,10 +19,19 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+        "net/http/httputil"
 	"os"
         "strconv"
 	"time"
 )
+
+func debug(data []byte, err error) {
+    if err == nil {
+       fmt.Printf("%s\n\n", data)
+    } else {
+       log.Fatalf("%s\n\n", err)
+    }
+}
 
 // global variables for communicating with callback redirect function redirectPolicyFunc()
 var g_username = "";
@@ -49,6 +58,8 @@ func main() {
    base_url := os.Getenv("PETS_BASE_URL")
    scheme   := os.Getenv("PETS_SCHEME")
 
+   Debug    := (os.Getenv("PETS_DEBUG") == "1")
+
    // see https://golang.org/pkg/time/ for how time casts work
    timeout, err := strconv.Atoi(os.Getenv("PETS_TIMEOUT"))
    if err != nil {
@@ -71,17 +82,21 @@ func main() {
       req, err := http.NewRequest("GET", url + "/pets", nil)
       req.SetBasicAuth(g_username, g_password)
 
+      if Debug { debug(httputil.DumpRequestOut(req, true)) }
+
       res, err := client.Do(req)
 
       if err != nil {
          log.Fatal(err)
+         debug(httputil.DumpResponse(res, true))
+      } else {
+         defer res.Body.Close()
+         if Debug { debug(httputil.DumpResponse(res, true)) }
+         body, err := ioutil.ReadAll(res.Body)
+         if err == nil {
+            fmt.Printf("%s\n", body)
+         }
       }
-      content, err := ioutil.ReadAll(res.Body)
-      res.Body.Close()
-      if err != nil {
-         log.Fatal(err)
-      }
-      fmt.Printf("%s\n", content)
    }
 
    {
@@ -89,18 +104,21 @@ func main() {
 
       req, err := http.NewRequest("GET", url + "/pets/1", nil)
       req.SetBasicAuth(g_username, g_password)
+      if Debug { debug(httputil.DumpRequestOut(req, true)) }
 
       res, err := client.Do(req)
 
       if err != nil {
          log.Fatal(err)
+         debug(httputil.DumpResponse(res, true))
+      } else {
+         defer res.Body.Close()
+         if Debug { debug(httputil.DumpResponse(res, true)) }
+         body, err := ioutil.ReadAll(res.Body)
+         if err == nil {
+            fmt.Printf("%s\n", body)
+         }
       }
-      content, err := ioutil.ReadAll(res.Body)
-      res.Body.Close()
-      if err != nil {
-         log.Fatal(err)
-      }
-      fmt.Printf("%s\n", content)
    }
 
    {
@@ -117,19 +135,22 @@ func main() {
 
       req.Header.Set("Content-Type", "application/json")
       req.SetBasicAuth(g_username, g_password)
+      if Debug { debug(httputil.DumpRequestOut(req, true)) }
 
       res, err := client.Do(req)
       if err != nil {
          log.Fatal(err)
+         debug(httputil.DumpResponse(res, true))
+      } else {
+         defer res.Body.Close()
+         if Debug { debug(httputil.DumpResponse(res, true)) }
+         body, err := ioutil.ReadAll(res.Body)
+         if err == nil {
+            fmt.Printf("%s\n", body)
+         }
       }
-
-      content, err := ioutil.ReadAll(res.Body)
-      res.Body.Close()
-      if err != nil {
-         log.Fatal(err)
-      }
-      fmt.Printf("%s\n", content)
       location := res.Header.Get("Location")
+      if Debug { debug(httputil.DumpResponse(res, true)) }
 
       fmt.Printf("%s %d %s\n", "HTTP status code is", res.StatusCode, location)
 
@@ -138,20 +159,21 @@ func main() {
 
          req, err = http.NewRequest("DELETE", location, nil)
          req.SetBasicAuth(g_username, g_password)
+         if Debug { debug(httputil.DumpRequestOut(req, true)) }
 
          res, err = client.Do(req)
 
          if err != nil {
             log.Fatal(err)
-         }
-         content, err = ioutil.ReadAll(res.Body)
-         res.Body.Close()
-         if err != nil {
-            log.Fatal(err)
-         }
-         fmt.Printf("%s %d\n", "HTTP status code is", res.StatusCode)
-         if (res.StatusCode == http.StatusOK) {
-            fmt.Printf("%s\n", content)
+            debug(httputil.DumpResponse(res, true))
+          } else {
+            defer res.Body.Close()
+            if Debug { debug(httputil.DumpResponse(res, true)) }
+            body, err := ioutil.ReadAll(res.Body)
+            fmt.Printf("%s %d\n", "HTTP status code is", res.StatusCode)
+            if (err == nil && res.StatusCode == http.StatusOK) {
+               fmt.Printf("%s\n", body)
+            }
          }
       }
    }
@@ -166,18 +188,21 @@ func main() {
 
       req, err := http.NewRequest("GET", url + "/admin/ping", nil)
       req.SetBasicAuth(g_username, g_password)
+      if Debug { debug(httputil.DumpRequestOut(req, true)) }
 
       res, err := client.Do(req)
 
       if err != nil {
          log.Fatal(err)
+         debug(httputil.DumpResponse(res, true))
+      } else {
+         defer res.Body.Close()
+         if Debug { debug(httputil.DumpResponse(res, true)) }
+         body, err := ioutil.ReadAll(res.Body)
+         if err == nil {
+            fmt.Printf("%s\n", body)
+         }
       }
-      content, err := ioutil.ReadAll(res.Body)
-      res.Body.Close()
-      if err != nil {
-         log.Fatal(err)
-      }
-      fmt.Printf("%s\n", content)
    }
 
    os.Exit(0);

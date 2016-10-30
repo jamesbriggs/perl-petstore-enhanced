@@ -24,6 +24,10 @@ class Pets
   base_uri ENV['PETS_SCHEME']+ENV['PETS_DOMAIN']+ENV['PETS_BASE_URL']
   default_timeout ENV['PETS_TIMEOUT'].to_f
   headers 'Content-Type' => 'application/json'
+  if ENV['PETS_DEBUG'] != "0"
+     puts "info: enabling debug mode"
+     debug_output
+  end
 
   def initialize(user, pass)
     self.class.basic_auth user, pass
@@ -103,7 +107,7 @@ rescue => e
 end
 
 begin
-   puts "Basic healthcheck:"
+   puts "Basic health check:"
    url='/admin/ping'
    response = Pets.new(admin_user, admin_pass).get(url)
    if response.code == 200
