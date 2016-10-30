@@ -6,6 +6,7 @@
 // Usage: go run go_client_sample.go
 // Note: source ../set.sh
 // Also: this project looks nice too: https://github.com/parnurzeal/gorequest
+// See: for status code methods, see https://golang.org/pkg/net/http/
 
 package main
 
@@ -119,7 +120,7 @@ func main() {
 
       fmt.Printf("%s %d %s\n", "HTTP status code is", res.StatusCode, location)
 
-      if (err == nil) && (res.StatusCode == 201) {
+      if (err == nil) && (res.StatusCode == http.StatusCreated) {
          fmt.Printf("%s\n", "Try to delete new pet")
 
          req, err = http.NewRequest("DELETE", location, nil)
@@ -136,7 +137,8 @@ func main() {
             log.Fatal(err)
          }
          fmt.Printf("%s %d\n", "HTTP status code is", res.StatusCode)
-         if (res.StatusCode == 200 || res.StatusCode == 204) {
+         StatusNoContent := 204
+         if (res.StatusCode == http.StatusOK || res.StatusCode == StatusNoContent) {
             fmt.Printf("%s\n", content)
          }
       }
