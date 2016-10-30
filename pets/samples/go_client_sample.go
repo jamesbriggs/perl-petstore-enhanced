@@ -1,3 +1,5 @@
+///bin/true; exec /usr/bin/env go run "$0" "$@"
+
 // Program: go_client_sample.go
 // Purpose: Go language sample client program for Perl Petstore Enhanced API Server
 // Copyright: James Briggs USA 2016
@@ -137,8 +139,7 @@ func main() {
             log.Fatal(err)
          }
          fmt.Printf("%s %d\n", "HTTP status code is", res.StatusCode)
-         StatusNoContent := 204
-         if (res.StatusCode == http.StatusOK || res.StatusCode == StatusNoContent) {
+         if (res.StatusCode == http.StatusOK) {
             fmt.Printf("%s\n", content)
          }
       }

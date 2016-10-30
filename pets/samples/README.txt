@@ -6,7 +6,7 @@ Steps:
 
 1. source ../set.sh
 2. ./curl_client_sample.sh
-3. go run go_client_sample.go
+3. ./go_client_sample.go
 4. ./make_java.sh
 5. ./perl_client_sample.pl
 6. ./php_client_sample.php
