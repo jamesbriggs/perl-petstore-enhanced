@@ -25,3 +25,5 @@ These are short but non-trivial programs with features such as:
 
 Take a look at the source code to see how to write your own programs.
 
+For C/C++ programs, see the libcurl samples at https://curl.haxx.se/libcurl/c/example.html
+

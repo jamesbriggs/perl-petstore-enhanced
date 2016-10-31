@@ -34,8 +34,8 @@ func debug(data []byte, err error) {
 }
 
 // global variables for communicating with callback redirect function redirectPolicyFunc()
-var g_username = "";
-var g_password = "";
+var g_username string = ""
+var g_password string = ""
 
 func redirectPolicyFunc(req *http.Request, via []*http.Request) error {
    req.SetBasicAuth(g_username, g_password)
@@ -44,21 +44,26 @@ func redirectPolicyFunc(req *http.Request, via []*http.Request) error {
 
 func main() {
 
-   type Pet struct { // if you want to understand this, see https://golang.org/pkg/encoding/json/#Marshal
+   type Pet struct { // if you want to understand this type definition, see https://golang.org/pkg/encoding/json/#Marshal
       Name string `json:"name"`
    }
 
-   username := os.Getenv("PETS_USER")
-   password := os.Getenv("PETS_PASSWORD")
+   var username string = os.Getenv("PETS_USER")
+   var password string = os.Getenv("PETS_PASSWORD")
 
-   admin_username := os.Getenv("PETS_ADMIN_USER")
-   admin_password := os.Getenv("PETS_ADMIN_PASSWORD")
+   if username == "" {
+      fmt.Printf("%s\n", "error: do 'source ../set.sh' first.")
+      os.Exit(1)
+   }
 
-   domain   := os.Getenv("PETS_DOMAIN")
-   base_url := os.Getenv("PETS_BASE_URL")
-   scheme   := os.Getenv("PETS_SCHEME")
+   var admin_username string = os.Getenv("PETS_ADMIN_USER")
+   var admin_password string = os.Getenv("PETS_ADMIN_PASSWORD")
 
-   Debug    := (os.Getenv("PETS_DEBUG") == "1")
+   var domain   string = os.Getenv("PETS_DOMAIN")
+   var base_url string = os.Getenv("PETS_BASE_URL")
+   var scheme   string = os.Getenv("PETS_SCHEME")
+
+   var Debug bool = (os.Getenv("PETS_DEBUG") == "1")
 
    // see https://golang.org/pkg/time/ for how time casts work
    timeout, err := strconv.Atoi(os.Getenv("PETS_TIMEOUT"))
@@ -66,7 +71,7 @@ func main() {
       log.Fatal(err)
    }
 
-   url := scheme + domain + base_url
+   var url string = scheme + domain + base_url
 
    client := &http.Client{
       Timeout: time.Duration(timeout) * time.Second,
@@ -205,6 +210,6 @@ func main() {
       }
    }
 
-   os.Exit(0);
+   os.Exit(0)
 }
 
