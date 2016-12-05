@@ -25,6 +25,8 @@ paths:
     get:
       summary: API Info
       operationId: infoPets
+      tags:
+        - pets
       responses:
         '200':
           description: Expected response to a valid request
@@ -39,6 +41,8 @@ paths:
     get:
       summary: Health Check
       operationId: pingPets
+      tags:
+        - pets-admin
       responses:
         '200':
           description: Expected response to a valid request
@@ -53,6 +57,8 @@ paths:
     get:
       summary: Admin Menu
       operationId: menuPets
+      tags:
+        - pets-admin
       responses:
         '200':
           description: Expected response to a valid request
@@ -66,6 +72,8 @@ paths:
     get:
       summary: API Documentation
       operationId: docPets
+      tags:
+        - pets
       responses:
         '200':
           description: Expected response to a valid request
