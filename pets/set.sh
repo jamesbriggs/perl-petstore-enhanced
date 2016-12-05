@@ -15,5 +15,6 @@ export PETS_SCHEME="http://"
 export PETS_DOMAIN=www.example.com
 export PETS_BASE_URL="/api/v1.0"
 export PETS_TIMEOUT=10
+export PETS_DEBUG=0
 
-export CLASSPATH="./json-simple-1.1.1.jar:."
+#export CLASSPATH="./json-simple-1.1.1.jar:."
