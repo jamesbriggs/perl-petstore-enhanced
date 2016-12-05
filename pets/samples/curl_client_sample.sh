@@ -58,7 +58,8 @@ echo -e "ret=$ret\n"
 location=`awk '/Location/{sub(/\r$/,""); print $2}' < $file_headers`
 
 echo "Delete one pet"
-rc=`curl $options -o /dev/null -I -w "%{http_code}" $auth_options -X DELETE $location`
+#rc=`curl $options -o /dev/null -I -w "%{http_code}" $auth_options -X DELETE $location`
+rc=`curl $options -I -w "%{http_code}" $auth_options -X DELETE $location`
 ret=$?
 echo "rc=$rc"
 echo -e "ret=$ret\n"
