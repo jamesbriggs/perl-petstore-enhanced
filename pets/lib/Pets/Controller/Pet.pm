@@ -1,5 +1,9 @@
 package Pets::Controller::Pet;
 
+use utf8;
+use open qw( :std :encoding(UTF-8) );
+binmode(STDOUT, ":utf8");
+
 use Mojo::Base 'Mojolicious::Controller';
 use XML::Simple;
 use JSON;

@@ -9,6 +9,10 @@
 use strict;
 use diagnostics;
 
+use utf8;
+use open qw( :std :encoding(UTF-8) );
+binmode(STDOUT, ":utf8");
+
 use Test::More;
 use Test::Mojo;
 

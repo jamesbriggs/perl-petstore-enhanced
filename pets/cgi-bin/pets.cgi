@@ -12,6 +12,10 @@
 
 use lib "$path/lib";
 
+use utf8;
+use open qw( :std :encoding(UTF-8) );
+binmode(STDOUT, ":utf8");
+
    my $base_url    = '/api/v1.0';
 
    my $auth_type   = 'Basic';
@@ -27,6 +31,10 @@ use lib "$path/lib";
    my $s = Pets->new->start;
 
 package Pets;
+
+use utf8;
+use open qw( :std :encoding(UTF-8) );
+binmode(STDOUT, ":utf8");
 
 use Mojo::Base "Mojolicious";
 use Mojo::Util 'secure_compare';
